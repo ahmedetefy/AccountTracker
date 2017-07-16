@@ -1,3 +1,4 @@
 .vagrant/
 examples/
 README.md
+db.sqlite3
