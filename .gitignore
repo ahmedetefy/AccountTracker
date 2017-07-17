@@ -2,3 +2,4 @@
 examples/
 README.md
 *.sqlite3
+migrations
