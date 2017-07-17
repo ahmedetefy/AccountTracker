@@ -3,3 +3,4 @@ examples/
 README.md
 *.sqlite3
 migrations
+__pycache__
