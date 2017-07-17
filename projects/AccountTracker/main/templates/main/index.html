@@ -17,6 +17,7 @@
 <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'css/responsive.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'css/animate.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/bootstrap-social.css' %}" rel="stylesheet" type="text/css">
 
 <!--[if IE]><style type="text/css">.pie {behavior:url(PIE.htc);}</style><![endif]-->
 
@@ -29,13 +30,17 @@
 <header class="header" id="header" style="padding-top: 140px;"><!--header-start-->
 	<div class="container">
     	<figure class="logo animated fadeInDown delay-07s">
-        	<a href="#"><img src="img/logo.png" alt=""></a>	
+        	<a href="#"><img src="{% static 'img/logo.png' %}" alt=""></a>	
         </figure>	
         <h1 class="animated fadeInDown delay-07s">Welcome To Account Tracker</h1>
         <ul class="we-create animated fadeInUp delay-1s">
         	<li>You are one stop away from managing your accounts. <br>Please login through your google account to start enjoying Account Tracker</li>
         </ul>
-            <a class="link animated fadeInUp delay-1s servicelink" href="#service">Get Started</a>
+        <div class="link animated fadeInUp delay-1s " style="background: transparent;padding: 0;">
+            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block btn-social btn-google" style="width: 100%; padding-right: 20px;">
+              <span type="button"  class="fa fa-google"></span> Log in with Google
+            </a>
+        </div>
     </div>
 </header>
 
