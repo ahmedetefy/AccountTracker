@@ -21,7 +21,7 @@ Vagrant.configure("2") do |django_config|
   django_config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", :mount_options => ["dmode=777","fmode=777"]
 
   # Config hostname and IP address so entry can be added to HOSTS file
-  django_config.vm.hostname = "vagrant"
+  django_config.vm.hostname = "vagrant-env.be"
   django_config.vm.network :private_network, ip: '192.168.99.100'
 
   # Forward a port from the guest to the host, which allows for outside

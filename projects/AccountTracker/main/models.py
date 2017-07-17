@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
+
 from localflavor.generic.models import IBANField
 
 
@@ -7,6 +9,7 @@ class Account(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     iban_number = IBANField()
+    author = models.ForeignKey(User)
 
     class Meta:
         verbose_name_plural = "accounts"

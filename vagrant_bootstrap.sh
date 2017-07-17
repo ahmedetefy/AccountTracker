@@ -39,6 +39,8 @@ echo "Creating Database .... "
 sudo -u postgres psql -c "CREATE DATABASE myproject"
 # sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE myproject vagrant"
 
+echo "Adding Host Name"
+echo "0.0.0.0  account.track.com" >> /etc/hosts
 
 # Install git for version control, pip for install python packages
 echo 'Installing git, Python 3, and pip...'

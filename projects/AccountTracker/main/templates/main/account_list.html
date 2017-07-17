@@ -1,0 +1,11 @@
+<h1>Accounts CBV</h1>
+<ul>
+    {% for account in object_list %}
+    <li>{{ account.first_name }} {{ account.last_name }}  ({{ account.iban_nummber }}
+    <a href="{% url 'main:account_edit' account.id %}">edit</a>
+    <a href="{% url 'main:account_delete' account.id %}">delete</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'main:account_new' %}">New</a>
