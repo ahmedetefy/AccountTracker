@@ -8,8 +8,14 @@ class Account(models.Model):
     last_name = models.CharField(max_length=200)
     iban_number = IBANField()
 
+    class Meta:
+        verbose_name_plural = "accounts"
+
     def __unicode__(self):
-        return self.name
+        return self.first_name
+
+    def __str__(self):
+        return self.first_name
 
     def get_absolute_url(self):
         return reverse('main:account_edit', kwargs={'pk': self.pk})
