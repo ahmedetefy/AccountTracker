@@ -1,0 +1,8 @@
+Hello World
+{% if request.user.is_authenticated %}
+<a  href="{% url 'auth:logout' %}?next={% url 'main:home' %}">Logout </a>
+{% else %}
+<a type="button" href="{% url 'social:begin' 'google-oauth2' %}" class="">
+            Login with Google
+          </a>
+{% endif %}

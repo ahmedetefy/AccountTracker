@@ -1,8 +1,45 @@
-Hello World
-{% if request.user.is_authenticated %}
-<a  href="{% url 'auth:logout' %}?next={% url 'main:home' %}">Logout </a>
-{% else %}
-<a type="button" href="{% url 'social:begin' 'google-oauth2' %}" class="">
-            Login with Google
-          </a>
-{% endif %}
+{% load static %}
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, maximum-scale=1">
+
+<title>Homepage</title>
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="shortcut icon" href="favicon.ico" type="img/x-icon">
+
+<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,800italic,700italic,600italic,400italic,300italic,800,700,600' rel='stylesheet' type='text/css'>
+
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/animate.css' %}" rel="stylesheet" type="text/css">
+
+<!--[if IE]><style type="text/css">.pie {behavior:url(PIE.htc);}</style><![endif]-->
+
+<script type="text/javascript" src="{% static 'js/jquery.1.8.3.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+
+
+</head>
+<body>
+<header class="header" id="header" style="padding-top: 140px;"><!--header-start-->
+	<div class="container">
+    	<figure class="logo animated fadeInDown delay-07s">
+        	<a href="#"><img src="img/logo.png" alt=""></a>	
+        </figure>	
+        <h1 class="animated fadeInDown delay-07s">Welcome To Account Tracker</h1>
+        <ul class="we-create animated fadeInUp delay-1s">
+        	<li>You are one stop away from managing your accounts. <br>Please login through your google account to start enjoying Account Tracker</li>
+        </ul>
+            <a class="link animated fadeInUp delay-1s servicelink" href="#service">Get Started</a>
+    </div>
+</header>
+
+
+
+</body>
+</html>
