@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'social.apps.django_app.default',
+    # 'admin_sso',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +65,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -123,3 +127,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+AUTHENTICATION_BACKENDS = (
+    # 'admin_sso.auth.DjangoSSOAuthBackend',
+    'social.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# Python Social Authentication
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1002013514892-dpj1luqfu3tdggdb2p7p4a0pafmsrmu5.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 't_flnn0bLa4Oj-RUHSwrq0A9'
+
+
+# Django Admin Google Authentication
+
+# DJANGO_ADMIN_SSO_OAUTH_CLIENT_ID = '1002013514892-dpj1luqfu3tdggdb2p7p4a0pafmsrmu5.apps.googleusercontent.com'
+# DJANGO_ADMIN_SSO_OAUTH_CLIENT_SECRET = 't_flnn0bLa4Oj-RUHSwrq0A9'
