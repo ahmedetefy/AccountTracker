@@ -1,5 +1,23 @@
-<form method="post">
-{% csrf_token %}
-    Are you sure you want to delete "{{ object }}" ?
-    <input type="submit" value="Submit" />
-</form>
+{% extends 'main/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+<div class="container rounded " style="padding: 2%; margin-top: 10%; text-align: center">
+	<div class="row">
+        <div class="col-md-12">
+        	<h2 style="text-align: center;">Delete Your Account</h2>  <br>
+	        <form method="post">
+			{% csrf_token %}
+			     <h4> Are you sure you want to delete "{{ object }}" ? </h4> <br>
+			    <div class="col-md-12">
+			        <button type="submit" style="margin-bottom: 5px;" class="btn btn-primary btn-block"><strong>SAVE</strong></button>
+			        <a href="{% url 'main:account_list' %}" style="margin-bottom: 5px;" class="btn btn-success btn-block"><strong>BACK TO ACCOUNTS</strong></a>
+			        <a  href="{% url 'auth:logout' %}?next={% url 'main:home' %}"><button type="button" class="btn btn-block btn-social btn-google" style="text-align: center;"><span type="button" class="fa fa-google"></span><strong>LOGOUT</strong></button> </a>
+			    </div>
+			</form>
+        </div>
+	</div>
+</div>
+{% endblock content %}
