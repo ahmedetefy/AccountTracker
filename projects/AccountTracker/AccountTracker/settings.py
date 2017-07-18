@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'social_django',
+    'widget_tweaks',
     # 'admin_sso',
 ]
 
