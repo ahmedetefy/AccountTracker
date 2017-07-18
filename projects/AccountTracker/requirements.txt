@@ -2,3 +2,4 @@ django
 psycopg2
 django-localflavor
 social-auth-app-django
+django-widget-tweaks
