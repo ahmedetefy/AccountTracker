@@ -1,5 +1,5 @@
-django
-psycopg2
-django-localflavor
-social-auth-app-django
-django-widget-tweaks
+django==1.11.3
+psycopg2==2.7.1
+django-localflavor==1.5.2
+social-auth-app-django==1.2.0
+django-widget-tweaks==1.4.1
