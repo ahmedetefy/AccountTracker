@@ -37,10 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
+    'main.apps.MainConfig',
     'social_django',
     'widget_tweaks',
-    # 'admin_sso',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +58,7 @@ ROOT_URLCONF = 'AccountTracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [(os.path.join(BASE_DIR, 'AccountTracker/static/html')), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,7 +129,7 @@ USE_TZ = True
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'),
-)
+                    )
 
 AUTHENTICATION_BACKENDS = (
     # 'admin_sso.auth.DjangoSSOAuthBackend',
@@ -150,3 +149,5 @@ LOGIN_REDIRECT_URL = '/list'
 
 # DJANGO_ADMIN_SSO_OAUTH_CLIENT_ID = '1002013514892-dpj1luqfu3tdggdb2p7p4a0pafmsrmu5.apps.googleusercontent.com'
 # DJANGO_ADMIN_SSO_OAUTH_CLIENT_SECRET = 't_flnn0bLa4Oj-RUHSwrq0A9'
+
+LOGIN_URL = '/'

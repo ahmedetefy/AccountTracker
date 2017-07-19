@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block js %}
 <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
@@ -20,11 +20,12 @@
 
 {% block content %}
 
-<div class="container rounded " style="padding: 2%; margin-top: 10%">
+
+<div class="container rounded mainContainerRounded">
 	<div class="row">
         <div class="col-md-12">
-	        <div class="table-responsive" style="background-color: white">  
-	        	<h2 style="text-align: center;">Accounts</h2>  <br>
+	        <div class="table-responsive tableWhiteBackground">  
+	        	<h2 class="centering" >Accounts</h2>  <br>
 	            <table id="mytable" class="table table-bordred table-striped">
 	            	{% if object_list %}   
 	                <thead>  
@@ -45,19 +46,19 @@
 							    <td><a href="{% url 'main:account_edit' account.id %}"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button></a></td>
                                 <td><a href="{% url 'main:account_delete' account.id %}"><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button></a></td>
                             {% else %}
-                            	<td><button class="btn btn-primary btn-xs permission" style="background-color: black; border-color: black;"><span class="glyphicon glyphicon-lock"></span></button></td>
-                                <td><button class="btn btn-primary btn-xs permission" style="background-color: black; border-color: black;"><span class="glyphicon glyphicon-lock "></span></button></td>
+                            	<td><button class="btn btn-primary btn-xs permission blackBtn"><span class="glyphicon glyphicon-lock"></span></button></td>
+                                <td><button class="btn btn-primary btn-xs permission blackBtn" ><span class="glyphicon glyphicon-lock "></span></button></td>
 						    {% endif %}
 	    				</tr>
 	    				{% empty %}
-	    					<h2 style="text-align: center;">There are no registered accounts!</h2>  <br>
+	    					<h2 class="centering">There are no registered accounts!</h2>  <br>
 	    				{% endfor %}
 	    			</tbody>
 				</table>
 				<div class="clearfix"></div>   
 	        </div>
-	        <a href="{% url 'main:account_new' %}"><button type="button" class="btn btn-primary btn-block" style="margin-bottom: 5px;"><strong>ADD NEW ACCOUNT</strong></button></a>
-	        <a  href="{% url 'auth:logout' %}?next={% url 'main:home' %}"><button type="button" class="btn btn-block btn-social btn-google" style="text-align: center;"><span type="button" class="fa fa-google"></span><strong>LOGOUT</strong></button> </a>
+	        <a href="{% url 'main:account_new' %}"><button type="button" class="btn btn-primary btn-block addAccountBtn" ><strong>ADD NEW ACCOUNT</strong></button></a>
+	        <a  href="{% url 'auth:logout' %}?next={% url 'main:home' %}"><button type="button" class="btn btn-block btn-social btn-google centering" ><span type="button" class="fa fa-google"></span><strong>LOGOUT</strong></button> </a>
         </div>
 	</div>
 </div>

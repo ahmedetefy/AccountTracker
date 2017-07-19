@@ -1,9 +1,10 @@
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.base import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import (LoginRequiredMixin)
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
+import datetime
 
 from .models import Account
 
@@ -16,22 +17,21 @@ class ManipulationPermissionMixin(object):
     Author: Ahmed Etefy
     """
 
-    def dispatch(self, request, *args, **kwargs):
+    def get_object(self, queryset=None):
+        """
+        Returns an instance of model:Account in the case that
+        the author of the instance of model:Account is the
+        the user logged in
+        otherwise it raises a HTTP404 Error
+        Author: Ahmed Etefy
+        """
         obj = super(ManipulationPermissionMixin, self).get_object()
         if not obj.author == self.request.user:
             raise Http404("Permission Denied!")
-        return super(
-            ManipulationPermissionMixin,
-            self).dispatch(request, *args, **kwargs)
+        return obj
 
 
-class CommonVariablesMixin(object):
-    login_url = '/'
-    redirect_field_name = ''
-
-
-class AccountList(CommonVariablesMixin,
-                  LoginRequiredMixin,
+class AccountList(LoginRequiredMixin,
                   ListView):
     """
     View to display a list of instance of Model:Account
@@ -40,8 +40,7 @@ class AccountList(CommonVariablesMixin,
     model = Account
 
 
-class AccountCreate(CommonVariablesMixin,
-                    LoginRequiredMixin,
+class AccountCreate(LoginRequiredMixin,
                     CreateView):
     """
     View to create an instance of Model:Account with fields
@@ -61,8 +60,7 @@ class AccountCreate(CommonVariablesMixin,
         return super(AccountCreate, self).form_valid(form)
 
 
-class AccountUpdate(CommonVariablesMixin,
-                    LoginRequiredMixin,
+class AccountUpdate(LoginRequiredMixin,
                     ManipulationPermissionMixin,
                     UpdateView):
     """
@@ -75,9 +73,24 @@ class AccountUpdate(CommonVariablesMixin,
     fields = ['first_name', 'last_name', 'iban_number']
     success_url = reverse_lazy('main:account_list')
 
+    def get_object(self, queryset=None):
+        """
+        Returns an instance of model:Account in the case that
+        less than two hours from creation time had elapsed
+        otherwise it raises a HTTP404 Error
+        Author: Ahmed Etefy
+        """
+        obj = super(AccountUpdate, self).get_object()
+        currentTime = datetime.datetime.now()
+        creationTime = obj.created_at.replace(tzinfo=None)
+        secDifference = (currentTime - creationTime).total_seconds()
+        hourDifference = secDifference / 3600
+        if hourDifference > 2:
+            raise Http404("You can no longer edit this entry!")
+        return obj
 
-class AccountDelete(CommonVariablesMixin,
-                    LoginRequiredMixin,
+
+class AccountDelete(LoginRequiredMixin,
                     ManipulationPermissionMixin,
                     DeleteView):
     """

@@ -1,7 +1,9 @@
 from django.test import TestCase, RequestFactory
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404
+import datetime
+from datetime import timedelta
 
 from .models import Account
 from . import views
@@ -36,20 +38,11 @@ class AccountModelTest(TestCase):
         for each instance of models:Account
         Author: Ahmed Etefy
         """
-        user = User.objects.create(username="etefy")
+        user = get_user_model().objects.create(username="etefy")
         account = Account.objects.create(
             first_name="Ahmed", last_name="Etefy",
             iban_number="GB04BARC20474473160944", author=user)
         self.assertIsNotNone(account.get_absolute_url())
-
-    def test_unicode_function(self):
-        """
-        Test that validates the string representation of
-        instances of models:Account
-        Author: Ahmed Etefy
-        """
-        account = Account(first_name="Ahmed")
-        self.assertEqual(account.__unicode__(), account.first_name)
 
 
 class HomeViewTest(TestCase):
@@ -71,13 +64,13 @@ class AccountListViewTest(TestCase):
     """
 
     def setUp(self):
-        u = User.objects.create(username="ahmedetefy")
+        u = get_user_model().objects.create(username="ahmedetefy")
         u.set_password("123the123")
         u.save()
         self.user = u
-        user2 = User.objects.create(username="johndoe")
-        u.set_password("123the123")
-        u.save()
+        user2 = get_user_model().objects.create(username="johndoe")
+        user2.set_password("123the123")
+        user2.save()
         Account.objects.create(author=u,
                                first_name="Adam",
                                last_name="John",
@@ -93,7 +86,7 @@ class AccountListViewTest(TestCase):
         Author: Ahmed Etefy
         """
         response = self.client.get(reverse_lazy('main:account_list'))
-        self.assertRedirects(response, '/')
+        self.assertRedirects(response, '/?next=/list')
 
     def test_view_list_user_authenticated(self):
         """
@@ -129,7 +122,7 @@ class AccountCreateViewTest(TestCase):
     """
 
     def setUp(self):
-        u = User.objects.create(username="ahmedetefy")
+        u = get_user_model().objects.create(username="ahmedetefy")
         u.set_password("123the123")
         u.save()
 
@@ -139,7 +132,7 @@ class AccountCreateViewTest(TestCase):
         Author: Ahmed Etefy
         """
         response = self.client.get(reverse_lazy('main:account_list'))
-        self.assertRedirects(response, '/')
+        self.assertRedirects(response, '/?next=/list')
 
     def test_create_task_user_authenticated_valid_credentials(self):
         """
@@ -210,12 +203,12 @@ class AccountEditViewTest(TestCase):
     """
 
     def setUp(self):
-        u = User.objects.create(username="ahmedetefy")
+        u = get_user_model().objects.create(username="ahmedetefy")
         u.set_password("123the123")
         u.save()
         self.user = u
         self.request_factory = RequestFactory()
-        user2 = User.objects.create(username="johndoe")
+        user2 = get_user_model().objects.create(username="johndoe")
         self.account1 = Account.objects.create(author=u,
                                                first_name="Adam",
                                                last_name="John",
@@ -233,7 +226,7 @@ class AccountEditViewTest(TestCase):
         Author: Ahmed Etefy
         """
         response = self.client.get(reverse_lazy('main:account_list'))
-        self.assertRedirects(response, '/')
+        self.assertRedirects(response, '/?next=/list')
 
     def test_edit_account_with_different_author(self):
         """
@@ -268,6 +261,25 @@ class AccountEditViewTest(TestCase):
         response = views.AccountUpdate.as_view()(request, pk=self.account1.pk)
         self.assertEqual(response.status_code, 302)
 
+    def test_edit_account_with_authenticated_author_past_time_limit(self):
+        """
+        Test for update permission when a time period of more than two
+        hours has elapsed since creation
+        Author: Ahmed Etefy
+        """
+        self.account1.created_at = datetime.datetime.now() - timedelta(hours=6)
+        self.account1.save()
+        data = {
+            'first_name': u'Tony2',
+            'last_name': "Jack",
+            'iban_number': "GB04BARC20474473160944",
+        }
+        request = self.request_factory.post(reverse_lazy(
+            'main:account_edit', kwargs={'pk': self.account1.pk}), data)
+        request.user = self.user
+        with self.assertRaises(Http404):
+            views.AccountUpdate.as_view()(request, pk=self.account1.pk)
+
 
 class AccountDeleteViewTest(TestCase):
     """
@@ -277,12 +289,12 @@ class AccountDeleteViewTest(TestCase):
     """
 
     def setUp(self):
-        u = User.objects.create(username="ahmedetefy")
+        u = get_user_model().objects.create(username="ahmedetefy")
         u.set_password("123the123")
         u.save()
         self.user = u
         self.request_factory = RequestFactory()
-        user2 = User.objects.create(username="johndoe")
+        user2 = get_user_model().objects.create(username="johndoe")
         self.account1 = Account.objects.create(author=u,
                                                first_name="Adam",
                                                last_name="John",
@@ -300,7 +312,7 @@ class AccountDeleteViewTest(TestCase):
         Author: Ahmed Etefy
         """
         response = self.client.get(reverse_lazy('main:account_list'))
-        self.assertRedirects(response, '/')
+        self.assertRedirects(response, '/?next=/list')
 
     def test_delete_account_with_different_author(self):
         """

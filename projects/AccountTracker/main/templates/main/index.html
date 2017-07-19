@@ -1,7 +1,8 @@
-{% extends 'main/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<header class="header" id="header" style="padding-top: 50px;"><!--header-start-->
+
+<header class="header headerContainer" id="header"><!--header-start-->
 	<div class="container">
     	<figure class="logo animated fadeInDown delay-07s">
         	<a href="#"><img src="{% static 'img/logo.png' %}" alt=""></a>	
@@ -11,17 +12,17 @@
         	<li>You are one stop away from managing your accounts. <br>Please login through your google account to start enjoying Account Tracker</li>
         </ul>
         {% if request.user.is_authenticated %}
-        	<div class="link animated fadeInUp delay-1s " style="background: transparent;padding: 0;">
-	            <a href="{% url 'main:account_list' %}" class="btn btn-block btn-primary " style="width: 100%; padding-right: 20px; padding-left: 20px"> VIEW ACCOUNTS
+        	<div class="link animated fadeInUp delay-1s buttonContainer" >
+	            <a href="{% url 'main:account_list' %}" class="btn btn-block btn-primary viewAccountsButton"> VIEW ACCOUNTS
 	            </a>
-	            <a href="{% url 'auth:logout' %}?next={% url 'main:home' %}" class="btn btn-block btn-social btn-google" style="width: 100%; padding-right: 20px;">
+	            <a href="{% url 'auth:logout' %}?next={% url 'main:home' %}" class="btn btn-block btn-social btn-google googleButton">
 	              <span type="button"  class="fa fa-google"></span> LOGOUT
 	            </a>
 	            
         	</div>
         {% else %}
-        <div class="link animated fadeInUp delay-1s " style="background: transparent;padding: 0;">
-            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block btn-social btn-google" style="width: 100%; padding-right: 20px;">
+        <div class="link animated fadeInUp delay-1s buttonContainer">
+            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block btn-social btn-google googleButton" >
               <span type="button"  class="fa fa-google"></span> Log in with Google
             </a>
         </div>

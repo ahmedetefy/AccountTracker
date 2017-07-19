@@ -1,0 +1,40 @@
+.viewAccountsButton {
+    width: 100%; 
+    padding-right: 20px; 
+    padding-left: 20px;
+}
+.googleButton {
+    width: 100%; 
+    padding-right: 20px;
+}
+.buttonContainer {
+    background: transparent;
+    padding: 0;
+}
+.headerContainer {
+    padding-top: 50px;
+}
+.mainContainerRounded {
+    padding: 2%; 
+    margin-top: 10%
+}
+.tableWhiteBackground {
+    background-color: white;
+}
+.centering {
+    text-align: center;
+}
+.addAccountBtn {
+    margin-bottom: 5px;
+}
+.blackBtn {
+    background-color: black; border-color: black;
+}
+.link:hover {
+    background: transparent;
+}
+.blackBtn:hover, .blackBtn:focus, .blackBtn:active, .blackBtn.active, .open .dropdown-toggle.blackBtn {
+    color: #ffffff;
+    background-color: black;
+    border-color: black;
+}
